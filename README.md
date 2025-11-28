@@ -1,1 +1,1 @@
-The used font was [AltStandard](https://github.com/Ioannes-Brclds/AltStandard.git). You can modify this structures as you want, and propose modifications: if you have some proposes, please share it with me.
+The used font was [AltStandard](https://github.com/Ioannes-Brclds/AltStandard.git). You can modify this structures as you want, and propose modifications; if you have some proposes, please share it with me.
