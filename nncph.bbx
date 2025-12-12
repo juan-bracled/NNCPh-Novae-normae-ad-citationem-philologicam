@@ -102,6 +102,23 @@
     }}{}%
 }
 %
+\newbibmacro*{titlepunct}{%
+    \printfield{title}%
+    \iffieldundef{role}{%
+        \iffieldundef{rauthor}{%
+            \ifnameundef{casual}{%
+                \addperiod\addspace
+            }{%
+                % Si hay 'casual', 'printroles' se imprimirá, no añadir punto.
+                \addspace
+            }%
+        }{%
+            \addspace
+        }%
+    }{%
+    }%
+}
+%
 \newbibmacro*{printroles}{%
   \iffieldundef{rauthor}{%
     \ifnameundef{casual}{}{% 
@@ -125,8 +142,8 @@
   \printnames{author}%
   \setunit{\addspace}\usebibmacro{quickdate}%
   \newunit
-  \printfield{title}%
-  \usebibmacro{printroles}% 
+  \usebibmacro{titlepunct}%
+  \usebibmacro{printroles}%
   \usebibmacro{printvolumetome}%
   \newunit
   \printlist{publisher}%
@@ -147,8 +164,8 @@
   \printnames{author}%
   \setunit{\addspace}\usebibmacro{quickdate}%
   \newunit
-  \printfield{title}%
-  \usebibmacro{printroles}% 
+  \usebibmacro{titlepunct}%
+  \usebibmacro{printroles}%
   \newunit
   \printfield{journaltitle}%
   \setunit{\addcomma\space}%
@@ -179,8 +196,8 @@
   \printnames{author}%
   \setunit{\addspace}\usebibmacro{quickdate}%
   \newunit
-  \printfield{title}%
-  \usebibmacro{printroles}% 
+  \usebibmacro{titlepunct}%
+  \usebibmacro{printroles}%
   \newunit
   \iffieldundef{url}{}{%
     \printtext{<}\printfield{url}\printtext{>}%
@@ -198,8 +215,8 @@
   \printnames{author}%
   \setunit{\addspace}\usebibmacro{quickdate}%
   \newunit
-  \printfield{title}%
-  \usebibmacro{printroles}% 
+  \usebibmacro{titlepunct}%
+  \usebibmacro{printroles}%
   \addperiod\space
   \printfield{booktitle}%
   \setunit{\addspace}%
@@ -221,7 +238,7 @@
   }
   \usebibmacro{finentry}%
 }
-
+%
 \AtBeginDocument{%
   \providecommand*{\UrlFont}{}
   \renewcommand*{\UrlFont}{\rmfamily\normalfont}%
