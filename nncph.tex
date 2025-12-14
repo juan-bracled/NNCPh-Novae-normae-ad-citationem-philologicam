@@ -1,8 +1,8 @@
-\documentclass[a4paper,11pt]{extarticle}
+\documentclass[a4paper,11pt]{article}
 \usepackage[margin=1.75cm,paperheight=25.00cm,paperwidth=17.00cm]{geometry}
 \usepackage{fontspec}
 \usepackage{polyglossia}
-\usepackage[citestyle=authoryear,bibstyle=nncph,backend=biber,url=true]{biblatex}
+\usepackage[style=nncph,backend=biber,url=true]{biblatex}
 \addbibresource{bibliography.bib}
 \usepackage[breaklinks=true,hidelinks]{hyperref}
 \setmainlanguage{spanish}
@@ -11,13 +11,14 @@
 \begin{document}
 \section*{\raggedleft\textsc{Novae normae ad citationem philologicam (NNCPh)}\\ \textsc{Nuevas normas para la citación filológica (NNCF)}}\par
 %
-Para libros con textos modernos = \textbf{Autor, A. (Fecha). \emph{Título} (Ed./Tr.= Nombre, N. y Nombre, N.). (Vol. X, T. Y/Fasc. Y, Z\textsuperscript{ed.}). Editorial. <Enlace>. (= Sigla).}\par
-Para libros con textos antiguos = \textbf{Editor, E. (Fecha). \emph{Título} (Au.= Nombre, N. \& Nombre, N.). (Vol. X, T. Y/Fasc. Y, Z\textsuperscript{ed.}). Editorial. <Enlace>. (= Sigla).}\par
+Para libros con textos modernos = \textbf{Autor, A. (Fecha). \emph{Título} (Ed./Tr.= Nombre, N. y Nombre, N.). (Vol. X, T. Y/Fasc. Y, Z\textsuperscript{ed.}). Editorial. <Enlace>. (= \emph{Sigla}).}\par
+Para libros con textos antiguos = \textbf{Editor, E. (Fecha). \emph{Título} (Au.= Nombre, N. \& Nombre, N.). (Vol. X, T. Y/Fasc. Y, Z\textsuperscript{ed.}). Editorial. <Enlace>. (= \emph{Sigla}).}\par
 Con texto de revistas = \textbf{Autor, A. (Fecha). ``Título''. Revista, Nº, páginas. Editorial. <Enlace>.}\par
 Para capítulos o artículos en libros o compilaciones = \textbf{Autor, A. (Fecha). ``Título''. \emph{Título del libro o compilación} (Serie o «colección», Nº), Nº págs. Editorial. <Enlace>.}\par
-Con texto o material desde internet = \textbf{Autor, A. (Fecha/S. F.). ``Nombre''. <Enlace>. (= Sigla).}\par
+Con texto o material desde internet = \textbf{Autor, A. (Fecha/S. F.). ``Nombre''. <Enlace>. (= \emph{Sigla}).}\par
 %
 \section*{\textsc{Ejemplos}}
+\textcite[113-120]{west2017} / \parencite[114-120]{west2017}.
 \nocite{*}
 \printbibliography[heading=none]
 \end{document}

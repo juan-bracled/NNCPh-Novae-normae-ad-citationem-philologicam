@@ -1,4 +1,19 @@
+% nncph.cbx
 \ProvidesFile{nncph.cbx}[2025/11/14 Biblatex citation structure for "Novae normae ad citationem philologicam"]
 %
-\RequireCitationStyle{authoryear} 
+\RequireCitationStyle{authoryear}
+%
+\DeclareDelimFormat{nameyeardelim}{\addcomma\space}
+%
+\renewbibmacro*{postnote}{%
+  \iffieldundef{postnote}
+    {}
+    {
+      \addcomma\space
+      \printfield[noformat]{postnote}%
+    }%
+}
+%
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat[article,book,incollection,online]{pages}{#1}
 \endinput

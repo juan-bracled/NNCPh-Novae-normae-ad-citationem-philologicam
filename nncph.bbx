@@ -1,4 +1,4 @@
-\ProvidesFile{nccph.bbx}[2025/11/13 NNCPh = "Novae normae ad citationem philologicam"]
+\ProvidesFile{nncph.bbx}[2025/11/13 NNCPh = "Novae normae ad citationem philologicam"]
 \RequireBibliographyStyle{standard}
 %
 \setlength{\bibitemsep}{0pt}
@@ -21,6 +21,7 @@
 \DeclareFieldFormat{pages}{#1}
 \DeclareFieldFormat{volume}{#1}
 \DeclareFieldFormat{edition}{#1}
+\DeclareFieldFormat{sigla}{\mkbibemph{#1}}
 %
 \newbibmacro*{quickdate}{%
   \iffieldundef{year}{\printtext[parens]{S.\,F.}}{\printtext[parens]{\printdate}}}
