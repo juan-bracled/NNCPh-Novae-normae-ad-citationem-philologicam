@@ -1,4 +1,3 @@
-% nncph.cbx
 \ProvidesFile{nncph.cbx}[2025/11/14 Biblatex citation structure for "Novae normae ad citationem philologicam"]
 %
 \RequireCitationStyle{authoryear}
@@ -16,4 +15,22 @@
 %
 \DeclareFieldFormat{postnote}{#1}
 \DeclareFieldFormat[article,book,incollection,online]{pages}{#1}
+%
+\DeclareCiteCommand{\prosecite}
+  {\usebibmacro{prenote}}
+  % Código principal: Imprime el año y la postnota
+  {\printtext[bibhyperref]{%
+     \printfield{labelyear}%
+     \iffieldundef{postnote}
+       {}
+       {%
+         \addcomma\space
+         \printfield[noformat]{postnote}%
+       }%
+   }}
+  {\multicitedelim}
+  {}
+%
+\DeclareMultiCiteCommand{\prosecite}[\mkbibparens]{\prosecite}{\multicitedelim}
+%
 \endinput
