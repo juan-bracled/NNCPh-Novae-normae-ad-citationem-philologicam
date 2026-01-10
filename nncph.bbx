@@ -1,14 +1,15 @@
 \ProvidesFile{nncph.bbx}[2025/11/13 NNCPh = "Novae normae ad citationem philologicam"]
 \RequireBibliographyStyle{standard}
 %
+% --- Configuración de Espaciado Minimalista ---
 \setlength{\bibitemsep}{0pt}
 \setlength{\parskip}{0pt}
 %
 \ExecuteBibliographyOptions{giveninits=true, maxnames=99}
 \DeclareNameAlias{default}{family-given}
 \DeclareNameAlias{sortname}{family-given}
-\DeclareNameAlias{casual}{default}
 %
+% --- Delimitadores y Formatos de Campo ---
 \protected\def\mkbibnamelastdelim{\ifnum\value{listcount}>\c@maxnames\else\text{\addspace\&}\fi\addspace}
 \protected\def\mkbibnameyeardelim{\addspace}
 %
@@ -23,6 +24,8 @@
 \DeclareFieldFormat{edition}{#1}
 \DeclareFieldFormat{sigla}{\mkbibemph{#1}}
 %
+% --- Macros de Soporte ---
+%
 \newbibmacro*{quickdate}{%
   \iffieldundef{year}{\printtext[parens]{S.\,F.}}{\printtext[parens]{\printdate}}}
 %
@@ -32,10 +35,8 @@
       \iffieldundef{fasciculus}{%
         \iffieldundef{edition}{}{%
           \setunit{\addspace}%
-          \printtext[parens]{%
-            \printfield{edition}\printtext{\textsuperscript{ed.}}%
-          }%
-          \addperiod
+          \printtext[parens]{\printfield{edition}\printtext{\textsuperscript{ed.}}}%
+          \adddot
         }%
       }{%
         \setunit{\addspace}%
@@ -46,41 +47,36 @@
             \printfield{edition}\printtext{\textsuperscript{ed.}}%
           }%
         }%
-        \addperiod
+        \adddot
       }%
     }{%
       \setunit{\addspace}%
       \printtext[parens]{%
         \printtext{Tom.\addspace}\printfield{tomus}%
         \iffieldundef{fasciculus}{}{%
-          \setunit{\addcomma\space}%
-          \printtext{Fasc.\addspace}\printfield{fasciculus}%
+          \setunit{\addcomma\space}\printtext{Fasc.\addspace}\printfield{fasciculus}%
         }%
         \iffieldundef{edition}{}{%
-          \setunit{\addcomma\space}%
-          \printfield{edition}\printtext{\textsuperscript{ed.}}%
+          \setunit{\addcomma\space}\printfield{edition}\printtext{\textsuperscript{ed.}}%
         }%
       }%
-      \addperiod
+      \adddot
     }%
   }{%
     \setunit{\addspace}%
     \printtext[parens]{%
       \printtext{Vol.\addspace}\printfield{volume}%
       \iffieldundef{tomus}{}{%
-        \setunit{\addcomma\space}%
-        \printtext{Tom.\addspace}\printfield{tomus}%
+        \setunit{\addcomma\space}\printtext{Tom.\addspace}\printfield{tomus}%
       }%
       \iffieldundef{fasciculus}{}{%
-        \setunit{\addcomma\space}%
-        \printtext{Fasc.\addspace}\printfield{fasciculus}%
+        \setunit{\addcomma\space}\printtext{Fasc.\addspace}\printfield{fasciculus}%
       }%
       \iffieldundef{edition}{}{%
-        \setunit{\addcomma\space}%
-        \printfield{edition}\printtext{\textsuperscript{ed.}}%
+        \setunit{\addcomma\space}\printfield{edition}\printtext{\textsuperscript{ed.}}%
       }%
     }%
-    \addperiod
+    \adddot
   }%
 }
 %
@@ -105,38 +101,28 @@
 %
 \newbibmacro*{titlepunct}{%
     \printfield{title}%
-    \iffieldundef{role}{%
-        \iffieldundef{rauthor}{%
-            \ifnameundef{casual}{%
-                \addperiod\addspace
-            }{%
-                % Si hay 'casual', 'printroles' se imprimirá, no añadir punto.
-                \addspace
-            }%
-        }{%
-            \addspace
-        }%
-    }{%
-    }%
+    \iffieldundef{rauthor}{\ifnameundef{editor}{\ifnameundef{translator}{\addperiod\addspace}{\addspace}}{\addspace}}{\addspace}%
 }
 %
 \newbibmacro*{printroles}{%
-  \iffieldundef{rauthor}{%
-    \ifnameundef{casual}{}{% 
-      \setunit{\addspace}%
-      \printtext[parens]{%
-        \printfield{role}\printtext{=}\addspace\printnames{casual}%
-      }%
-      \addperiod
-    }%
-  }{%
+  \iffieldundef{rauthor}{}{%
     \setunit{\addspace}%
-    \printtext[parens]{%
-      \printfield{role}\printtext{=}\addspace\printfield{rauthor}%
-    }%
-    \addperiod
+    \printtext[parens]{Au.=\addspace\printfield{rauthor}}%
+    \adddot
+  }%
+  \ifnameundef{editor}{}{%
+    \setunit{\addspace}%
+    \printtext[parens]{Ed.=\addspace\printnames{editor}}%
+    \adddot
+  }%
+  \ifnameundef{translator}{}{%
+    \setunit{\addspace}%
+    \printtext[parens]{Tr.=\addspace\printnames{translator}}%
+    \adddot
   }%
 }
+%
+% --- Bibliography Drivers ---
 %
 \DeclareBibliographyDriver{book}{%
   \usebibmacro{begentry}%
@@ -146,17 +132,14 @@
   \usebibmacro{titlepunct}%
   \usebibmacro{printroles}%
   \usebibmacro{printvolumetome}%
-  \newunit
-  \printlist{publisher}%
-  \newunit
+  \setunit{\addperiod\addspace}\printlist{publisher}%
+  \addperiod
   \iffieldundef{url}{}{%
-    \printtext{<}\printfield{url}\printtext{>}%
-    \newunit
-  }
+    \addspace\printtext{<}\printfield{url}\printtext{>}\addperiod
+  }%
   \iffieldundef{sigla}{}{%
-    \addperiod\addspace
-    \printtext{(=\addspace}\printfield{sigla}\printtext{)}%
-  }
+    \addspace\printtext{(=\addspace}\printfield{sigla}\printtext{).}%
+  }%
   \usebibmacro{finentry}%
 }
 %
@@ -169,26 +152,20 @@
   \usebibmacro{printroles}%
   \newunit
   \printfield{journaltitle}%
-  \setunit{\addcomma\space}%
-  \printfield{volume}%
-  %
+  \setunit{\addcomma\space}\printfield{volume}%
   \iffieldundef{number}{}{%
-    \setunit{\addspace}%
-    \printtext[parens]{\printfield{number}}%
+    \setunit{\addspace}\printtext[parens]{\printfield{number}}%
   }%
-  %
   \setunit{\addcomma\space}\printfield{pages}%
-  \newunit
-  \printlist{publisher}%
-  \newunit
+  \addperiod
+  \setunit{\addspace}\printlist{publisher}%
+  \addperiod
   \iffieldundef{url}{}{%
-    \printtext{<}\printfield{url}\printtext{>}%
-    \newunit
-  }
+    \addspace\printtext{<}\printfield{url}\printtext{>}\addperiod
+  }%
   \iffieldundef{sigla}{}{%
-    \addperiod\addspace
-    \printtext{(=\addspace}\printfield{sigla}\printtext{)}%
-  }
+    \addspace\printtext{(=\addspace}\printfield{sigla}\printtext{).}%
+  }%
   \usebibmacro{finentry}%
 }
 %
@@ -199,15 +176,13 @@
   \newunit
   \usebibmacro{titlepunct}%
   \usebibmacro{printroles}%
-  \newunit
+  \addperiod
   \iffieldundef{url}{}{%
-    \printtext{<}\printfield{url}\printtext{>}%
-    \newunit
-  }
+    \addspace\printtext{<}\printfield{url}\printtext{>}\addperiod
+  }%
   \iffieldundef{sigla}{}{%
-    \addperiod\addspace
-    \printtext{(=\addspace}\printfield{sigla}\printtext{)}%
-  }
+    \addspace\printtext{(=\addspace}\printfield{sigla}\printtext{).}%
+  }%
   \usebibmacro{finentry}%
 }
 %
@@ -218,25 +193,21 @@
   \newunit
   \usebibmacro{titlepunct}%
   \usebibmacro{printroles}%
-  \addperiod\space
+  \newunit
   \printfield{booktitle}%
-  \setunit{\addspace}%
-  \usebibmacro{serie+number}%
+  \setunit{\addspace}\usebibmacro{serie+number}%
   \iffieldundef{pages}{}{%
-    \printtext{\addcomma\space}%
-    \printfield{pages}%
+    \setunit{\addcomma\space}\printfield{pages}%
   }%
-  \newunit
-  \printlist{publisher}%
-  \newunit
+  \addperiod
+  \setunit{\addspace}\printlist{publisher}%
+  \addperiod
   \iffieldundef{url}{}{%
-    \printtext{<}\printfield{url}\printtext{>}%
-    \newunit
-  }
+    \addspace\printtext{<}\printfield{url}\printtext{>}\addperiod
+  }%
   \iffieldundef{sigla}{}{%
-    \addperiod\addspace
-    \printtext{(=\addspace}\printfield{sigla}\printtext{)}%
-  }
+    \addspace\printtext{(=\addspace}\printfield{sigla}\printtext{).}%
+  }%
   \usebibmacro{finentry}%
 }
 %
@@ -244,3 +215,4 @@
   \providecommand*{\UrlFont}{}
   \renewcommand*{\UrlFont}{\rmfamily\normalfont}%
 }
+\endinput
